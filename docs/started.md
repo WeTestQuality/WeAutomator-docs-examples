@@ -1,4 +1,4 @@
-# WeAutomator入手教程-以安卓系统、pytest框架为例
+# UDT中使用WeAutomator入手教程-以安卓系统、pytest框架为例
 1. 连接安卓设备
 ![image](https://user-images.githubusercontent.com/102640628/175203791-4fb34bd7-31ab-4879-8afd-4e76773efc7a.png)
 2. pytest组织用例
