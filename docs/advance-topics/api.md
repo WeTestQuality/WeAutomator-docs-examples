@@ -1,18 +1,80 @@
 # 常用API
 
 WeAutomator 提供了约 50 个 API，如常用的点击、滑动、查找、等待、登录等，全部 API 文档详见 **工具**-**帮助**-**API**，有详细介绍。
+- 连接设备
+
+先将手机和电脑相连，连接方式如下
+- [连接Android设备](../quick-start/android-connect.md)
+- [连接iOS设备](../quick-start/ios-connect.md)
+
+
+```python
+from uitrace.api import *
+init_driver(os_type=None, udid=None, max_size=800, bundle_id="com.watest.WebDriverAgentRunner.xctrunner",
+            screen_port=None, ctrl_port=None, mode=RunMode.SINGLE, driver_lib=None, adb_path="", **kwargs):
+    """  
+        Args:
+        os_type (OSType): 设备系统，安卓为OSType.ANDROID，iOS为OSType.IOS
+        udid (str): 设备ID,不填则自动获取连接的设备id
+        max_size (int): 传输画面的最大边长
+        bundle_id (str): 设备为iOS时，WDA的bundle id
+        screen_port (int): 获取画面服务的端口，不指定则使用闲置端口
+        ctrl_port (int): 操作服务的端口，不指定则使用闲置端口
+        mode (RunMode): 运行模式，一般使用默认即可
+        driver_lib (DriverLib): 底层驱动使用的框架
+        adb_path (str): adb路径，用户可进行配置以避免adb冲突；为None时则使用工具中自带的adb文件
+        **kwargs: 脚本执行产出路径的修改等
+
+    """
+```    
+
+- 应用操作
+
+WeAutomator提供了针对应用的多种操作，包括：
+
+```python
+#安装应用
+install_app(app_path)
+# app_path(str): 安装包路径
+# return->bool: 安装是否成功
+```
+```python
+#卸载应用
+uninstall_app(pkg)
+# pkg(str):IOS系统为卸载应用的bundle id
+# return->bool: 卸载是否成功
+```
+```python
+#启动应用
+start_app(pkg, cl)
+# pkg(str): IOS为应用的bundle id， Android为包名
+# return->bool: 卸载是否成功
+```
+```python
+#重启应用
+restart_app(pkg, **kwargs)
+# pkg(str): IOS系统为被重启应用的bundle id， Android为包名
+# return->bool: 卸载是否成功
+```
+```python
+#获取当前应用
+current_app():
+# return->str: 应用的bundle id
+```
 
 - 点击
 
-  ```
-  # 点击图片
-  click(loc=None, by=DriverType.CV, offset=None, timeout=30, duration=0.05, times=1)
-  # 点击控件
-  click(loc=None, by=DriverType.UI, offset=None, timeout=30, duration=0.05, times=1)
-  # 点击文字
-  click(loc=None, by=DriverType.OCR, offset=None, timeout=30, duration=0.05, times=1)
-  # 点击坐标
-  click(loc=None, by=DriverType.POS, offset=None, timeout=30, duration=0.05, times=1)
+WeAutomator提供多种方式的点击操作，通过设置参数**by**来切换不同的点击方式。
+
+  ```python
+  # 点击图片,loc为图像路径或ndarray形式
+  click(loc=img, by=DriverType.CV, offset=None, timeout=30, duration=0.05, times=1)
+  # 点击控件，loc为点击的Xpath
+  click(loc=Xpath, by=DriverType.UI, offset=None, timeout=30, duration=0.05, times=1)
+  # 点击文字，loc为待点击的文字信息
+  click(loc=text, by=DriverType.OCR, offset=None, timeout=30, duration=0.05, times=1)
+  # 点击坐标, loc为点击的坐标信息
+  click(loc=pos, by=DriverType.POS, offset=None, timeout=30, duration=0.05, times=1)
   ```
 
 - 滑动
