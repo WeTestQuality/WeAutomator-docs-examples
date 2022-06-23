@@ -6,3 +6,5 @@
 2. 测试功能点：腾讯手机管家安全检测功能
 - 操作步骤：不登录应用-点击【安全检测】-进入安全检测点击【立即检测】
 - 预期：检测完成后输出检测结果安全/有风险
+3. 测试包体：
+    https://drive.weixin.qq.com/s?k=AJEAIQdfAAoLeLZ1SgAVUAzAbHADY
