@@ -34,8 +34,8 @@ class TestPhone(object):
         """
         #启动app
         pkg = "com.tencent.qqpimsecure"
-        uninstall_app(pkg)
-        install_app("/Users/quyuan/Downloads/demotest.apk")
+        #uninstall_app(pkg)
+        #install_app("/Users/quyuan/Downloads/demotest.apk")
         start_app(pkg, clear_data=True)
         #进入app腾讯管家首页
         exp_xpath = '//android.widget.Button[@text="马上体验"]'
