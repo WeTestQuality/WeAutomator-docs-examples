@@ -51,8 +51,8 @@ class TestPhone(object):
         测试case 1 
         """
         pass
-       #打印日志
-logger.info(res)
+        #打印日志
+        logger.info(res)
 
     def test_case_2(self):
         """
