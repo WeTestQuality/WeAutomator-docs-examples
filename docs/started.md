@@ -65,7 +65,7 @@ pytest_main([os.path.join(os.path.dirname(__file__), "main.py")])
 - 将main.py（除了pytest_main([os.path.join(os.path.dirname(__file__), "main.py")])）的内容复制到test_phoneguard.py
 
 ![image](https://user-images.githubusercontent.com/102640628/175204165-6329fc0e-4018-486f-b642-1b51fc17bc7a.png)
-具体：
+粘贴到test_phoneguard.py文件如下：
 ```python
 # -*- coding: UTF-8 -*-
 import pytest
