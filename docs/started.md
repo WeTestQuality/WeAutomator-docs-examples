@@ -132,6 +132,13 @@ from uitrace.api import *
 pytest_main([os.path.join(os.path.dirname(__file__), "test_phoneguard.py")])
 ```
 5. 将调试通过的脚本后导出zip包，提交到udt的用例管理模块/终端云测提测页面
+- 去掉setup_method方法中 app的安装卸载功能：
+```python
+#uninstall_app(pkg)
+#安卓app,app_path填写app本地路径
+#install_app(app_path)
+```
+
 ![image](https://user-images.githubusercontent.com/102640628/175204282-685eab55-29bd-4641-b836-37bfa9e5c1dc.png)
 
 6. 参考的demo用例：
