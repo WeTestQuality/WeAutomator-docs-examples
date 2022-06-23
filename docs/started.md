@@ -1,4 +1,4 @@
-# 使用WeAutomator提交UDT/终端云测工程入手教程
+# 使用WeAutomator提交UDT/终端云测平台入手教程
 ### 以安卓系统、pytest框架为例
 1. 连接安卓设备
 ![image](https://user-images.githubusercontent.com/102640628/175203791-4fb34bd7-31ab-4879-8afd-4e76773efc7a.png)
@@ -131,7 +131,7 @@ main.py的内容改为：
 from uitrace.api import *
 pytest_main([os.path.join(os.path.dirname(__file__), "test_phoneguard.py")])
 ```
-5. 将调试通过的脚本后导出zip包，提交到用例管理
+5. 将调试通过的脚本后导出zip包，提交到udt的用例管理模块/终端云测提测页面
 ![image](https://user-images.githubusercontent.com/102640628/175204282-685eab55-29bd-4641-b836-37bfa9e5c1dc.png)
 
 6. 参考的demo用例：
