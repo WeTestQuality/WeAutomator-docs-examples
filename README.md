@@ -9,6 +9,7 @@ WeTest WeAutomator Documentation and Test Samples
     - [连接Android设备](docs/quick-start/android-connect.md)
     - [连接iOS设备](docs/quick-start/ios-connect.md)
     - [编写脚本](docs/quick-start/write-script.md)
+    - [提交到云测平台-入手](docs/started.md)
 - 使用说明
     - [常用API](docs/advance-topics/api.md)
     - [原生控件录制](docs/advance-topics/record-app.md)
