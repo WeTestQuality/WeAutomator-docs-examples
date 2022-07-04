@@ -1,27 +1,31 @@
-# 如何在Android设备上进行自动化测试
+# WeAutomator IDE快速上手
 
 ## 1. 介绍
-本示例包含以下内容：
-- 如何在WeAutomator IDE中连接Android设备
-- 
+本文档将演示如何使用WeAutomator IDE进行简单的手机自动化测试。强烈建议使用者从这篇文档开始WeAutomator IDE的使用之旅。本示例包含以下内容：
+- WeAutomator IDE的简介
+- WeAutomator IDE安装
+- 如何在WeAutomator IDE中连接设备
+- WeAutomator IDE
 
-## 2. IDE中连接Android手机
+## 2. IDE简介
+## 3. IDE安装
+## 4. IDE中连接设备
 使用WeAutomator IDE对Android进行自动化测试时，首先要连接Android设备。WeAutomator IDE不仅支持连接Android真机，还支持连接WeTest云真机。
-连接Android手机前的配置信息请参考 [连接Android设备](docs/quick-start/android-connect.md)，本示例默认相关配置已正确设置
+连接Android手机前的配置信息请参考 [连接Android设备](../../docs/quick-start/android-connect.md)，本示例默认相关配置已正确设置
 
 ### 1）在IDE中连接Android真机
 - 使用USB连接Android手机
 - 点击IDE中的连接设备
 
-    ![figure](images/1.png)
+    ![figure](https://github.com/Yezhj1/WeAutomator-docs-examples/blob/main/examples/quick-start/images/20220704001.png)
 
 - 连接目标设备
 
-    ![figure](images/2.png)
+    ![figure](https://github.com/Yezhj1/WeAutomator-docs-examples/blob/main/examples/quick-start/images/20220704002.png)
 
 - 连接成功，IDE成功加载Android手机
 
-    ![figure](images/3.png)
+    ![figure](https://github.com/Yezhj1/WeAutomator-docs-examples/blob/main/examples/quick-start/images/20220704003.png)
 
 
 ### 2) 在IDE中连接Android云真机
@@ -36,11 +40,17 @@ WeAutomator IDE可以连接WeTest云真机平台的云真机设备。WeTest云�
 - 选择目标设备，点击**开始调试**，进入设备界面
 - 点击**远程调试**，根据当前电脑系统选择调试工具，复制连接命令
 
-    ![figure](images/4.png)
+    ![figure](https://github.com/Yezhj1/WeAutomator-docs-examples/blob/main/examples/quick-start/images/20220704004.png)
 - 打开电脑命令行，将复制的连接命令粘贴进去，运行
 - 通过命令行查看是否连接成功，或者使用`adb devices`查看连接设备
 
-    ![figure](images/)
+    ![figure](https://github.com/Yezhj1/WeAutomator-docs-examples/blob/main/examples/quick-start/images/20220704005.png)
+
+    ![figure](https://github.com/Yezhj1/WeAutomator-docs-examples/blob/main/examples/quick-start/images/20220704006.png)
 - 点击IDE中的连接设备
 - 连接目标设备
 - 连接成功，IDE成功加载Android手机
+
+    ![figure](https://github.com/Yezhj1/WeAutomator-docs-examples/blob/main/examples/quick-start/images/20220704007.png)
+
+
