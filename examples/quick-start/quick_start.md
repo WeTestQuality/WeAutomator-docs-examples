@@ -8,6 +8,8 @@
 - WeAutomator IDE
 
 ## 2. IDE简介
+
+WeAutomator IDE是一款移动端UI自动化工具，支持图像识别、安卓控件识别、录制回放、连接云端手机、只能Monkey等功能，支持游戏和App。
 ## 3. IDE安装
 ## 4. IDE中连接设备
 使用WeAutomator IDE对Android进行自动化测试时，首先要连接Android设备。WeAutomator IDE不仅支持连接Android真机，还支持连接WeTest云真机。
