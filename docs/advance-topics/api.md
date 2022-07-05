@@ -10,6 +10,7 @@ WeAutomator 提供了约 50 个 API，如常用的点击、滑动、查找、等
 
 ```python
 from uitrace.api import *
+# 连接设备
 init_driver(os_type=None, udid=None, max_size=800, bundle_id="com.watest.WebDriverAgentRunner.xctrunner", screen_port=None, ctrl_port=None, mode=RunMode.SINGLE, driver_lib=None, adb_path="", **kwargs):
 # os_type(OSType): 设备系统，安卓为OSType.ANDROID, iOS为OSType.IOS
 # udid(str): 设备ID，不填则自动获取连接设备的id
@@ -142,85 +143,96 @@ find(loc, by=DriverType.CV, timeout=30)
 # return: 查找到返回坐标，否则返回None
 
 ```
-
-- 等待（3.2.0 及以后版本移除）
-
-  ```
-  # 在指定的时间等待图像出现（如果没有出现则抛出异常TimeOutError）
-  wait(locator=None, timeout=20, by=DriverType.CV)
-  # 在指定的时间等待控件出现（如果没有出现则抛出异常TimeOutError）
-  wait(locator=None, timeout=20, by=DriverType.UI)
-  # 在指定的时间等待文字出现（如果没有出现则抛出异常TimeOutError）
-  wait(locator=None, timeout=20, by=DriverType.OCR)
-  # 在指定的时间等待图片消失（如果仍然存在则抛出异常TargetStillExistError）
-  wait_vanish(locator=None, timeout=20, by=DriverType.CV)
-  # 在指定的时间等待控件出现（如果没有出现则抛出异常TargetStillExistError）
-  wait_vanish(locator=None, timeout=20, by=DriverType.UI)
-  # 在指定的时间等待文字出现（如果没有出现则抛出异常TargetStillExistError）
-  wait_vanish(locator=None, timeout=20, by=DriverType.OCR)
-  ```
-
-- 判断存在（3.2.0 及以后版本移除）
-
-  ```
-  # 在指定的时间等待图像出现（存在返回True，不存在返回False）
-  exists(locator=None, timeout=20, by=DriverType.CV)
-  # 在指定的时间等待控件出现（存在返回True，不存在返回False）
-  exists(locator=None, timeout=20, by=DriverType.UI)
-  # 在指定的时间等待文字出现（存在返回True，不存在返回False）
-  exists(locator=None, timeout=20, by=DriverType.OCR)
-  ```
-
+4
 - 账号相关
 
-  ```
-  # QQ登录
-  qq_login(acc='', pwd='')
-  # 微信登录
-  wechat_login(acc = '', pwd = '')
-  # 选择和QQ好友一起玩
-  play_with_qq_friends(locator=None, acc='', pwd='', timeout=240)
-  # 选择和微信好友一起玩
-  play_with_wechat_friends(locator = None, acc = '', pwd = '', timeout = 240)
-  ```
+```python
+# QQ登录
+from advanced.app.qq.login import login_qq
+login_qq(acc='', pwd='', has_verify=False)
+# acc(str): QQ账号
+# pwd(str): QQ密码
+# has_verify(bool): 是否存在滑动验证过程
+# return(bool): 是否登陆成功
+
+# 微信登录
+from advanced.app.wechat.login import login_wechat
+wechat_login(acc = '', pwd = '')
+# acc(str): 微信账号
+# pwd(str): 密码
+# return->bool: 登陆是否成功
+```
+```python
+# 选择使用QQ登陆
+from advanced.app.qq.login import login_by_qq
+login_by_qq(loc=None, acc="", pwd="", timeout=240, has_verify=False)
+# loc(str): 使用QQ登陆的按钮图片，为None时默认当前已进入QQ界面
+# acc(str): QQ账号
+# pwd(str): 密码
+# return->bool: 登陆是否成功
+```
+  
+  [使用qq登陆QQ音乐](../../examples/demos/login_by_qq_or_wechat/README.md)
+```python
+# 选择使用微信登陆
+from advanced.app.wechat.login import login_by_wechat
+play_with_wechat_friends(locator = None, acc = '', pwd = '', timeout = 240)
+# loc(str): 使用微信登陆的按钮图片，为None时默认当前已进入微信界面
+# acc(str): 登陆的微信账号
+# pwd(str): 微信密码
+# return->: 登陆是否成功
+```
+  
+  [使用微信登陆QQ音乐](../../examples/demos/login_by_qq_or_wechat/README.md)
+
 
 - 设备相关
 
 ```python
-# 获取远程数据（苹果设备无此功能）
-get_data(platform = PlatformType.OUTER, name="", default_data={})
+# 获取具体类型的驱动，便于调用该框架的原生API
+get_driver(by=DriverLib.WDA)
+# by(DriverLib): 驱动类型，WDA为DriverLib.WDA, UIAutomator为DriverLib.UIA, GA Unity为DriverType.GA_UNITY, UIAutomator为DriverType.GA_UE
+# return->DeviceEnv: 具体驱动类型
 
 # 根据xpath获取元素列表
 get_elements(xpath, by=DriverType.UI)
+# xpath(str): 获取元素的xpath
+# by(DriverType): 获取元素的类型，系统原生DriverType.UI, GA Unity为DriverTpe.GA_UNITY, GA UE为DriverType.GA_UE
+# win_id(int): 窗口id，对于控件有多窗口的情况，可以指定具体窗口(Android)
+# return->list: 元素对象的list
 
 # 获取设备当前画面
 get_img()
+# return-> ndarray: 画面图像
+
+# 获取图像中所有的文本
+get_text(img, text_type="ch")
+# img(str): 待识别的图像
+# text_type(str): OCR识别的文本类型，"ch"为中英文，"en"为英文
+# return->list: 查找到的文本结果，列表内容有如下形式
+# [[[127.0, 242.0], [201.0, 242.0], [201.0, 261.0], [127.0, 261.0]], ['注册/登录', 0.96725357]]，分别为左上、右上、右下、左下点坐标及识别结果与匹配度
 
 # 获取控件树
 get_uitree(by=DriverType.UI)
-
-# 将绝对坐标转换成相对坐标
-ratio_transfer(pt)
-
-# 将相对坐标转换成绝对坐标
-win_transfer(pt)
+# by(DriverType): 获取控件树的类型，系统原生DriverType.UI, GA Unity为DriverType.GA_UNITY, GA UE为DriverType.GA_UE
+# all_wins(bool): 为True时获取所有窗口控件，为False时则自动判断当前窗口获取其控件
+# return->dict: 控件树
 
 # 手机截图
-screenshot(label='screenshot', img_path=None, pos=None)
-
-# 获取脚本目录
-script_dir()
-
-# 执行adb shell命令
-shell(cmd)
-
-# 执行adb shell命令不显示窗口
-shell_noshow(cmd)
-
-# 苹果设备将绝对坐标转换成相对坐标
+screenshot(label='screenshot', img_path=None, pos=None, pos_list=None)
+# label(str): 图像存储的文件名
+# img_path(str): 存储图像的路径，为None时则存到默认目录
+# pos(tuple or list): 将坐标绘制在图像上
+# pos_list(list): 将一组坐标绘制在图像上
+# return->(str): 图像存储路径
+```
+- 坐标转换
+```python
+# 将绝对坐标转换成相对坐标
 abs2rel(pt)
+# pos(tuple or list): 相对坐标
 
-# 苹果设备将相对坐标转换成绝对坐标
+# 将相对坐标转换成绝对坐标
 rel2abs(pt)
 ```
 
