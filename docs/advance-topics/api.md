@@ -1,13 +1,14 @@
 # 常用API
 
 WeAutomator 提供了约 50 个 API，如常用的点击、滑动、查找、等待、登录等，全部 API 文档详见 **工具**-**帮助**-**API**，有详细介绍。
-- 连接设备
 
-先将手机和电脑相连，连接方式如下
+## 连接设备
+**先将手机和电脑相连，连接方式如下**
 - [连接Android设备](../quick-start/android-connect.md)
 - [连接iOS设备](../quick-start/ios-connect.md)
 
-
+## API介绍
+- 连接设备
 ```python
 from uitrace.api import *
 # 连接设备
@@ -24,7 +25,35 @@ init_driver(os_type=None, udid=None, max_size=800, bundle_id="com.watest.WebDriv
 # **kwargs：脚本执行产出路径的修改等
 
 ```    
+- 断开连接
+```python
+# 结束驱动
+stop_driver()
+# 脚本运行结束后调用，会释放相关驱动，生成报告等
+```
+- 设备功能键操作
+```python
+press(name)
+# name(DeviceButton):   
+class DeviceButton{
+  HOME = 3
+  VOLUME_UP = 24
+  VOLUME_DOWN = 25
+  
+  # for Android special
+  BACK = 4
+  POWER = 26
+  DEL = 67
+  MENU = 82
+  PECENt_APP = 187
+  SLEEP = 223
+  WAKE_UP = 224
 
+  # for IOS special
+  LOCK = 1000
+  UNLOCK = 1001
+}
+```
 - 应用操作
 
 `可以通过WeAutomator IDE获取手机应用的package name(pkg)`
@@ -66,7 +95,7 @@ restart_app('com.tencent.mobileqq')
 ```
 ```python
 # 结束应用
-stop_app(pkg))
+stop_app(pkg)
 # pkg(str): IOS系统为应用的bundle id， Android为应用包名
 # return->bool: 结束是否成功
 # 示例：关闭手机qq
@@ -76,6 +105,11 @@ stop_app('com.tencent.mobileqq')
 #获取当前应用
 current_app():
 # return->str: 应用的bundle id
+```
+```python
+# 获取设备中安装的app
+app_list()
+# return->list: app名字
 ```
 
 
@@ -107,6 +141,24 @@ WeAutomator提供多种方式的点击操作，通过设置参数**by**来切换
   #上述4中点击方式，最后都是通过调用 click_pos 实现
   click_pos(pos, duration=0.05, times=1)
   #pos的计算方式由click()中的参数by决定。
+
+  # 长按
+  long_click(loc=None, by=DriverType.POS, offset=None, timeout=30, duration=1, **kwargs)
+  # loc和by的设置与click方法一致
+  # offset(list or tuple): 偏移，元素定位位置加上偏移为实际操作位置
+  # timeout(int): 定位元素的超时时长
+  # duration(float): 点击的按压时长
+  # **kwargs: 基于不同的查找类型，需要其他的参数，具体参见各find函数
+  # return->bool: 是否操作成功
+
+  # 双击
+  double_click(loc=None, by=DriverType.POS, offset=None, timeout=30, duration=0.05, **kwargs)
+  # loc和by的设置和click方法一致
+  # offset(list or tuple): 偏移，元素定位位置加上偏移为实际操作位置
+  # timeout(int): 定位元素的超时时间
+  # duration(float): 点击的按压时长，以实现长按
+  # **kwargs：基于不同的查找类型，其他需要的参数，具体参见各find函数
+  # return->bool: 操作是否成功
   ```
 
 - 滑动
@@ -135,15 +187,61 @@ WeAutomator提供了多种方式的查找操作，通过设置参数**by**来切
 # 查找
 find(loc, by=DriverType.CV, timeout=30)
 # by(DriverType),为查找方式设定。根据不同的by，loc参数设定也不一样
-# by=DriverType.UI, loc: 目标控件的Xpath
-# by=DriverType.CV, loc: 图片路径名
-# by=DriverType.OCR, loc：目标位置的文本信息
+# by=DriverType.UI, loc: 目标控件的Xpath， 调用find_ui方法
+# by=DriverType.CV, loc: 图片路径名，调用find_cv方法
+# by=DriverType.OCR, loc：目标位置的文本信息，调用find_ocr方法
 # by=DriverType.POS, loc: 坐标
-# by=DriverType.GA_UNITY or by=DriverType.GA_UE, loc: 目标控件的Xpath
+# by=DriverType.GA_UNITY or by=DriverType.GA_UE, loc: 目标控件的Xpath，调用find_ga方法
 # return: 查找到返回坐标，否则返回None
+# 说明：find方法会根据不同的by参数，调用不同的查找方法，查找方法包括：find_cv, find_ocr, find_ui, find_ga
 
+# 基于多尺寸模版匹配的图像查找
+find_cv(tql, img=None, timeout=30, threshold=0.8, pos=None, pos_weight=0.05, ratio_lv=21, is_translucent=False, tpl_l=None, deviation=None, time_interval=0.5)
+# tql(ndarray or str): 待匹配查找的目标图像
+# img(ndarray or str): 在该图上进行查找，为None时则获取当前设备画面
+# timeout(int): 查找超时时间
+# threshold(float): 匹配阈值
+# pos(tuple or list): 目标图像的坐标，以辅助定位图像位置
+# pos_weight(float): 坐标辅助定位的权重
+# tpl_l(ndarray or str): 备选的尺寸更大的目标图像，以辅助定位
+# deviation(tuple or list): 偏差，目标及备选目标间的偏差
+# ratio_lv(int): 缩放范围，数值越大则进行更大尺寸范围的匹配查找
+# is_translucent(bool): 目标图像是否为半透明，为True则会进行图像预处理
+# time_interval(float): 循环查找的时间间隔，默认为0.5s
+# return->list: 查找到的坐标，未找到则返回None
+
+# 基于OCR文字识别的查找
+find_ocr(word, timeout=30, is_regular=True)
+# word(str): 待查找的文字，支持正则
+# timeout(int): 查找超时时间
+# is_regulaar(bool): 为True时进行正则查找
+# return->lsit: 查找到的中心点坐标
+
+# 基于控件查找
+find_ui(xpath, timeout=30, **kwargs)
+# xpath(str): 控件xpath
+# timeout(int): 查找超时时间
+# return->list: 查找到的中心点坐标
+
+# 基于GA控件的查找
+find_ga(xpath, by=DriverType.GA_UNITY, timeout=30)
+# xpath(str): 元素路径或者路径+id的组合，如：/test[@id=1]
+# by(DriverType): 查找类型。GA Unity为DriverType.GA_UNITY, GA UE 为DriverType.GA_UE
+# timeout(int): 查找超时时间
+# return->list: GA控件的中心点坐标
+
+# 综合查找
+multi_find(ctrl="", img=None, pos=None, by=DriverType.UI, ctrl_timeout=30, img_timeout=10, **kwargs)
+# 优先基于控件定位，未查找到则基于图片匹配+坐标定位，仍未找到则返回传入坐标
+# ctrl(str): 待查找的控件
+# img(ndarray or str): 待匹配查找的图像
+# pos(list or tuple): 目标图像的坐标，以辅助定位图像位置
+# by(DriverType): ctrl的控件类型，原生控件DriverType.UI, GA Unity为DriverType.GA_UNITY, GA UE为DriverType.GA_UE
+# ctrl_timeout(int): 基于控件查找的超时时间
+# img_timeout(int): 基于图像匹配查找的超时时间
+# **kwargs: 不同查找类型需要设置参数，具体见各find函数
 ```
-4
+
 - 账号相关
 
 ```python
@@ -226,16 +324,122 @@ screenshot(label='screenshot', img_path=None, pos=None, pos_list=None)
 # pos_list(list): 将一组坐标绘制在图像上
 # return->(str): 图像存储路径
 ```
+- 文本输入
+```python
+# 文本输入
+input_text(text, xpath=None, timeout=30, depth=10, ime=IMEType.ADBKEYBOARD)
+# text(str): 待输入的文本
+# xpath(xpath): iOS要基于控件输入，xpath形式定位
+# timeout(int): 超时时间
+# depth(int): source tree的最大深度值，部分应用深度值设置过大会导致操作不稳定，过小可能导致输入失败
+# ime(IMEType): Android文本输入采用的方式
+```
 - 坐标转换
 ```python
 # 将绝对坐标转换成相对坐标
 abs2rel(pt)
-# pos(tuple or list): 相对坐标
+# pos(tuple or list): 绝对坐标，如(0.2, 0.3)
+# return->tuple: 相对坐标, 即(int(0.2*w), int(0.3*h)), (w, h)为当前手机屏幕尺寸
+# 示例：
+abs_pos = abs2rel(pos=(0.23, 0.6))
 
 # 将相对坐标转换成绝对坐标
 rel2abs(pt)
+# pos(tuple or list): 相对坐标
+# return->tuple: 绝对坐标
+# 示例：
+rel_pos = rel2abs((100, 200))
+```
+- 功能模块初始化
+```python
+# 初始化OCR框架， 为初始化则将在第一次调用相关功能时自动初始化
+init_ocr(text_type='ch')
+# text_type(str): 初始化语言类型，默认为'ch', 用于识别中文
+
+# 初始化Android_UiAutomator框架，未初始化则将在第一次调用相关功能时自动初始化
+init_ui()
+
+# 初始化Android文本输入框架， 未初始化则将在第一次调用相关功能时自动初始化
+init_input()
+
+# 初始化GAutomator框架， 未初始化则将在第一次调用相关功能时自动初始化
+init_ga(engine_type=DriverType.GA_UNITY, port=None)
+# engine_type(DriverType): 初始化引擎类型， Unity为DriverType.GA_UNITY, UE为DriverType.UE
+# port(int): 连接端口
+
+# 初始化可选框架，以节省调用时初始化的时间
+init_env(ocr=True, input=True, ui=True, **kwargs)
+# ocr(bool): 初始化OCR文字识别框架
+# input(bool): 初始化Android文本输入框架， 需为Android时才会执行
+# ui(bool): 初始化Android UIAutomator控件识别框架，需为Android时才会运行
+# **kwargs：初始化框架可传入的参数
 ```
 
+- IOS special API
+```python
+# 执行操作
+perform(actions)
+# actions(list): 操作序列。如[pf_down(pos), pf_wait(0.1), pf_up()];
+# 多指操作为[[指1操作序列]，[指2操作序列]]，如[[pf_down(pos1), pf_wait(0.1), pf_up()], [pf_down(pos2), pf_wait(0.1), pf_up()]]
+# actions内的元素会返回对应的操作协议，perform会将这些协议传达到IOS设备，执行对应的操作
+
+# 按下操作的协议
+pf_down(pos)
+# pos(tuple or list): 按下位置的坐标
+# return->dict: 按下操作的协议
+
+# 等待操作的协议
+pf_wait(duration)
+# duration(int or float): 等待时间（s）
+# return->dict: 等待操作的协议
+
+# 移动操作的协议
+pf_moveto(pos)
+# pos(tuple or list): 移动到的位置的坐标
+# return->dict: 移动操作的协议
+
+# 抬起操作的协议
+pf_up()
+# return->dict: 抬起操作的协议
+```
+- Android special API  
+**slide_track(track)需要补充示例**
+```python
+# 初始化Android_UiAutomator框架，未初始化则将在第一次调用相关功能时自动初始化
+init_ui()
+
+# 初始化Android文本输入框架， 未初始化则将在第一次调用相关功能时自动初始化
+init_input()
+
+# 轨迹滑动
+slide_track(track)
+# track(str or list): 轨迹坐标点文件
+# slide_track方法内部通过调用touch_down, touch_move和touch_up方法实现功能。
+
+# Android按下操作
+touch_down(pos, id=0, pressure=50)
+# pos(tuple or list): 按下位置的坐标
+# id(int): 操作id，不同id以实现多点操作
+# pressure(int): 操作压力
+
+# Android移动操作
+touch_move(pos, id=0, pressure=50)
+# pos(tuple or list): 移动到的位置坐标
+# id(int): 操作id，不同id以实现多点操作
+# pressure(int): 操作压力
+
+# Android 抬起操作
+touch_up(pos=None, id=0, pressure=50)
+# pos(tuple or list): 抬起的位置坐标
+# id(int): 操作id，不同id以实现多点操作
+# pressure(int): 操作压力
+
+# 获取当前的activity
+current_activity()
+# return->str: 当前的activity
+
+
+```
 - 智能 monkey
 
   ```
