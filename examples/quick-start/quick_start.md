@@ -5,7 +5,8 @@
 - WeAutomator IDE的简介
 - WeAutomator IDE安装
 - 如何在WeAutomator IDE中连接设备
-- WeAutomator IDE
+- WeAutomator IDE编写和运行简单的测试脚本
+- 查看运行报告
 
 ## 2. IDE简介
 
@@ -109,10 +110,7 @@ WeAutomator IDE可以连接WeTest云真机平台的云真机设备。WeTest云�
 
 ## WeAutomator IDE运行脚本
 接着，我们点击IDE中的**运行**功能，运行上面的脚本，脚本运行过程如下 
-<video controls>
-    <source src="images/script_run.mp4" type="video/mp4">
-</video>
-
+![figure](images/result.gif)
 
 
 
