@@ -438,6 +438,93 @@ touch_up(pos=None, id=0, pressure=50)
 current_activity()
 # return->str: 当前的activity
 
+# 获取屏幕分辨率
+screen_size()
+# return->list: 屏幕分辨率
+```
+
+- 其他
+```python
+# 记录报告
+record_report(func, args=None, kwargs=None)
+# func(func or str): 操作函数名或者操作名
+# args：操作相关函数
+# kwargs：操作相关函数
+
+# 日志装饰器
+log_deco(report=True)
+# return->bool: 为True时自动截图记录在报告中，为False则只打印
+
+# 高亮装饰器
+highlight_line()
+
+# 生成报告
+generate_report(report_dir=None)
+# report_dir(str): 报告生成路径
+# 说明：stop_driver方法会默认调用该方法，如可能异常导致无法正常结束，可主动调用该函数
+```
+- 事件处理
+```python
+# 说明：此类API专门用来处理Android/IOS一些常见的系统弹窗事件(注：当前不支持app内的弹窗，只支持系统级别弹窗)
+# Android设备预设事件
+EVENT_RULE = [
+    r'^(完成|关闭|关闭应用|好|允许|始终允许|好的|确定|确认|安装|下次再说|知道了|同意)$',
+    r'^((?<!不)(忽略|允(\s){0,2}许|同(\s){0,2}意)|继续|清理|稍后|稍后处理|暂不|暂不设置|强制|下一步)$',
+    r'^((?i)allow|Sure|SURE|accept|install|done|ok)$',
+    ('(建议.*清理)', '(取消|以后再说|下次再说)'),
+    ('(发送错误报告|截取您的屏幕|是否删除)', '取消'),
+    ('(隐私)', '同意并继续'),
+    ('(隐私)', '同意'),
+    ('(残留文件占用|网络延迟)', '取消'),
+    ('(更新|游戏模式)', '取消'),
+    ('(账号密码存储)', '取消'),
+    ('(出现在其他应用上)', '关闭'),
+    ('(申请获取以下权限)', '(允许|同意)'),
+    ('(获取此设备)', '(仅在使用该应用时允许|允许|同意)'),
+    ('(以下权限|暂不使用)', r'^同[\s]{0,2}意'),
+    ('(立即体验|立即升级)', '稍后处理'),
+    ('(前往设置)', '暂不设置'),
+    ('(我知道了)', '我知道了'),
+    ('(去授权)', '去授权'),
+    ('(看看手机通讯录里谁在使用微信.*)', '是'),
+    ('(默认已允许以下所有权限|以下不提示|退出)', '确定'),
+    ('(仅充电|仅限充电|传输文件)', '取消')
+]
+
+# IOS设备预设事件
+EVENT_RULE_IOS = [
+    r'^(完成|关闭|关闭应用|好|允许|始终允许|好的|以后|确定|确认|安装|下次再说|知道了|同意|无线局域网与蜂窝数据|以后再说)$',
+    r'^((?<!不)(忽略|允(\s){0,2}许|同(\s){0,2}意)|继续|清理|稍后|稍后处理|暂不|暂不设置|强制|下一步)$',
+    r'^((?i)allow|Sure|SURE|accept|install|done|ok)$',
+    ('位置', '^(始终|使用App时允许)$'),
+    ('更新', '^关闭$'),
+    ('访问', '^(好|始终|使用App时允许|允许访问所有照片)$'),
+    ('删除', '^取消$')
+]
+
+# 启动预设事件自动处理
+start_event_handler()
+# 说明：该方法将根据当前设备的类型(Android or IOS),选择对应的预设事件(EVENT_RULE or EVENT_RULE_IOS),然后通过调用load_default_handler方法，将预设事件加载
+
+
+# 批量加载事件自动处理规则
+load_default_handler(rule)
+# rule(list): 事件正则规则。list元素可为str、list、tuple
+# 说明：如果希望加载预设事件，则直接调用start_event_handler方法即可。如果想另外批量增加事件自动处理规则，可使用该方法。该方法内部通过循环的方式调用add_event_handler方法，将批量事件逐个加载，进行处理。
+
+
+# 添加事件自动处理规则，并运行
+add_event_handler(match_element, action_element=None)
+# match_element(str): 判断目标的正则匹配，存在则进行action_element匹配并点击
+# action_element(str): 点击目标的正则匹配，为None时则点击match_element规则匹配结果
+
+# 事件自动处理立即生效
+sync_event_handler()
+
+# 清除事件自动处理规则
+clear_event_handler()
+
+# 以上handler系列事件处理api现支持对系统级别的弹窗处理，如果当前弹窗事件在预设事件中，可直接调用start_event_handler方法，如果当前弹窗时间不在预设时间内，可先调用add_event_handler方法，如add_event_handler("忽略", "忽略")，将预设之外的事件加载，再调用start_event_handler方法处理
 
 ```
 - 智能 monkey
