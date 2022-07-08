@@ -20,21 +20,21 @@ WeAutomator IDE是一款移动端UI自动化工具，支持图像识别、安卓
 - 内部客户：https://cloudtest.woa.com/console/store/tools/uitrace
 ## 4. IDE中连接设备
 使用WeAutomator IDE对Android进行自动化测试时，首先要连接Android设备。WeAutomator IDE不仅支持连接Android真机，还支持连接WeTest云真机。
-连接Android手机前的配置信息请参考 [连接Android设备](../../docs/quick-start/android-connect.md)，本示例默认相关配置已正确设置
+连接Android手机前的配置信息请参考 [连接Android设备](android-connect.md)，本示例默认相关配置已正确设置
 
 ### 1）在IDE中连接Android真机
 - 使用USB连接Android手机
 - 点击IDE中的连接设备
 
-    ![figure](https://github.com/Yezhj1/WeAutomator-docs-examples/blob/main/examples/quick-start/images/20220704001.png)
+    ![figure](image/20220704001.png)
 
 - 连接目标设备
 
-    ![figure](https://github.com/Yezhj1/WeAutomator-docs-examples/blob/main/examples/quick-start/images/20220704002.png)
+    ![figure](image/20220704002.png)
 
 - 连接成功，IDE成功加载Android手机
 
-    ![figure](https://github.com/Yezhj1/WeAutomator-docs-examples/blob/main/examples/quick-start/images/20220704003.png)
+    ![figure](image/20220704003.png)
 
 
 ### 2) 在IDE中连接Android云真机
@@ -49,18 +49,18 @@ WeAutomator IDE可以连接WeTest云真机平台的云真机设备。WeTest云�
 - 选择目标设备，点击**开始调试**，进入设备界面
 - 点击**远程调试**，根据当前电脑系统选择调试工具，复制连接命令
 
-    ![figure](https://github.com/Yezhj1/WeAutomator-docs-examples/blob/main/examples/quick-start/images/20220704004.png)
+    ![figure](image/20220704004.png)
 - 打开电脑命令行，将复制的连接命令粘贴进去，运行
 - 通过命令行查看是否连接成功，或者使用`adb devices`查看连接设备
 
-    ![figure](https://github.com/Yezhj1/WeAutomator-docs-examples/blob/main/examples/quick-start/images/20220704005.png)
+    ![figure](image/20220704005.png)
 
-    ![figure](https://github.com/Yezhj1/WeAutomator-docs-examples/blob/main/examples/quick-start/images/20220704006.png)
+    ![figure](image/20220704006.png)
 - 点击IDE中的连接设备
 - 连接目标设备
 - 连接成功，IDE成功加载Android手机
 
-    ![figure](https://github.com/Yezhj1/WeAutomator-docs-examples/blob/main/examples/quick-start/images/20220704007.png)
+    ![figure](image/20220704007.png)
 
 
 ## 5. WeAutomator IDE录制自动化脚本
@@ -71,46 +71,49 @@ WeAutomator IDE可以连接WeTest云真机平台的云真机设备。WeTest云�
 - 连接设备  
 通过以上方法完成手机的连接，这时IDE会**主脚本**界面  
 
-![figure](images/IDE-init.png)  
+![figure](image/IDE-init.png)  
 我们可以在**init_driver**和**stop_driver**之间输入我们的脚本指令
 
 - 启动手机应用
 
 我们点击想要运行的应用，等到应用启动完成，点击IDE右侧的**启动APP**，在跳出的界面上点击**从当前屏幕获取**，IDE会自动识别当前打开的应用名，接着点击**确定**，生成启动应用的指令
 
-![figure](images/start-app.gif)
+![figure](image/start-app.gif)
 
 
 - 通过**录制**功能，录制原生控件
 
 通过**录制**->**控件录制**->**原生**，打开IDE控件录制功能，并通过鼠标选择相应的区域，得到点击目标的控件信息，生成通过Xpath点击目标区域的指令
 
-![figure](images/ui-record.gif)
+![figure](image/ui-record.gif)
 
 
 - 输入文本
 
 通过**输入文本**功能，可以模拟向手机输入文本信息。
 
-![figure](images/input-singer.gif)
+![figure](image/input-singer.gif)
 
+- 基于图像识别，对图像目标区域点击  
 
+通过基于cv的图像识别技术，可以实现对目标图像区域的点击操作。如点击搜索按钮图像
+![figure](image/search.gif)
 - 使用OCR文字识别功能，点击目标文字区域
 
 通过使用OCR文字识别功能，可以点击目标文字区域。例如我们点击页面上的“单曲”
 
-![figure](images/OCR-test.gif)
+![figure](image/OCR-test.gif)
 
 
 - 使用图像匹配算法，点击目标目标图像区域
 
 通过基于cv的图像匹配算法，可以完成对目标图像区域的点击。例如我们通过图像匹配点击页面上的"播放全部"
 
-![figure](images/play-gif.gif)
+![figure](image/play-gif.gif)
 
 ## WeAutomator IDE运行脚本
 接着，我们点击IDE中的**运行**功能，运行上面的脚本，脚本运行过程如下 
-![figure](images/result.gif)
+![figure](image/result.gif)
 
 
 
@@ -118,11 +121,11 @@ WeAutomator IDE可以连接WeTest云真机平台的云真机设备。WeTest云�
 
 ## 查看报告
 WeAutomator IDE提供了运行报告查看接口，通过点击，可以跳转到运行报告网页。
-![figure](images/IDE-output.png)
+![figure](image/IDE-output.png)
 
 
 运行报告
-![figure](images/report1.png)
-![figure](images/report2.png)
+![figure](image/report1.png)
+![figure](image/report2.png)
 
 以上就是通过WeAutomator IDE进行简单手机自动化测试的示例。更多IDE使用案例可参考其他的案例。
