@@ -5,7 +5,7 @@ WeTest WeAutomator Documentation and Test Samples
 
 - [概览](docs/overview.md)
 - [版本更新](docs/changelog.md)
-- 快速开始
+- [快速开始](docs/quick-start/quick_start.md)
     - [连接Android设备](docs/quick-start/android-connect.md)
     - [连接iOS设备](docs/quick-start/ios-connect.md)
     - [编写脚本](docs/quick-start/write-script.md)
