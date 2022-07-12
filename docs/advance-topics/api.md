@@ -527,13 +527,47 @@ clear_event_handler()
 # 以上handler系列事件处理api现支持对系统级别的弹窗处理，如果当前弹窗事件在预设事件中，可直接调用start_event_handler方法，如果当前弹窗时间不在预设时间内，可先调用add_event_handler方法，如add_event_handler("忽略", "忽略")，将预设之外的事件加载，再调用start_event_handler方法处理
 
 ```
+
+- 图像算法  
+```python
+# 边缘匹配
+edge_match(tpl, scene)
+# tpl(ndarray or str): 待匹配查找的目标图像
+# scene(ndarray or str): 在该图上进行查找
+# return->list: 匹配结果，中心点坐标，未找到则返回None
+
+# 特征点匹配
+f = FeatureMatch()
+f.init_matcher(detector=MatchAlogo.SIFT, matcher=MatchAlogo.FLANN)
+rect = f.match(tpl, scene, **kwargs)
+# init_matcher：初始化匹配
+# match：图像匹配
+# detector（MatchAlogo）：特征描述子，支持SIFT、SURF、ORB、AKAZE
+# matcher(MatchAlogo): 搜索方法，支持FLANN、BF
+# tpl(ndarray or str): 待匹配查找的目标图像
+# scene(ndarray or str): 在该图上进行查找
+# **kwargs: filter_thresh剔除特征点的阈值等
+# return->list: 匹配结果，左上角点的坐标及区域宽、高，未找到则返回None
+
+# 滑动检测
+slide_verify(slider)
+# slider(ndarray or str): 滑块图像
+
+# 黑白屏检查
+screen_check(img, pct_thresh=0.95, is_black=True, gray_thresh=30)
+# img(ndarray): 待判断的图像
+# pct_thresh(double): 判断阈值，占比超过了该比例则认为该图像为黑屏或白屏
+# is_black (bool): True则判断是否为黑屏，False则判断是否为白屏
+# gray_thresh (int): 灰度阈值，判断该像素点是否为黑屏区域或白屏区域
+# return->bool: 检测结果
+```
 - 智能 monkey
 
-  ```
-  # 进行智能探索（Android）
-  ai_monkey(pkg=None, explore_type=ExploreType.CTRL, timeout=-1, pre_exec=None, web_check=True, keyboard_check=True, restart_interval = 900, other_data=[], qq_data=[], wechat_data=[])
-  # 进行智能探索（iOS）
-  ai_monkey(pkg=None, explore_type=ExploreType.UI, timeout=3600, pre_exec=None)
-  # 停止智能探索（Android）
-  stop_monkey(ai_key)
-  ```
+```python
+# 进行智能探索（Android）
+ai_monkey(pkg=None, explore_type=ExploreType.CTRL, timeout=-1, pre_exec=None, web_check=True, keyboard_check=True, restart_interval = 900, other_data=[], qq_data=[], wechat_data=[])
+# 进行智能探索（iOS）
+ai_monkey(pkg=None, explore_type=ExploreType.UI, timeout=3600, pre_exec=None)
+# 停止智能探索（Android）
+stop_monkey(ai_key)
+```
