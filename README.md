@@ -20,6 +20,7 @@ WeTest WeAutomator Documentation and Test Samples
     - [原生控件录制](docs/advance-topics/record-app.md)
     - [坐标录制](docs/advance-topics/record-aixel.md")
     - [游戏控件录制](docs/advance-topics/record-game.md)
+    - [pytest组织测试用例](docs/advance-topics/WeAutomator-IDE/pytest-in-IDE.md)
     - [执行脚本](docs/advance-topics/run-script.md)
     - [提交到wetest云测](docs/advance-topics/submit-script.md)
 - 常见问题
