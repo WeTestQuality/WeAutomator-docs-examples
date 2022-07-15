@@ -6,15 +6,17 @@ WeAutomator IDE的主交互界面由5个部分组成：顶部功能栏、设备�
 
 ## 2. 顶部功能栏
 ### 1）连接设备
-**连接设备**主要负责IDE和移动设备连接，用户需要先将测试的移动端设备和电脑连接，在通过**连接设备**完成移动设备与IDE的连接。  
+**连接设备**主要负责IDE和移动设备连接，用户需要先将测试的移动端设备和电脑连接，再通过**连接设备**完成移动设备与IDE的连接。  
 具体的连接方式参看[连接Android设备](../../quick-start/android-connect.md)和[连接iOS设备](../../quick-start/ios-connect.md)  
 ### 2）运行
 **运行**负责运行当前编写的**主脚本**。用户在**主脚本**编写相关的测试代码后，可以通过点击顶部功能栏中的**运行**，运行脚本。脚本运行过程中，**运行**会变为**停止运行**，你可以通过点击**停止运行**，中断脚本运行。
-![figure](image/run-button.png)
+
+<img src=image/run-button.png width=60%/>  
+
 ### 3）录制
 **录制**功能提供了方便的脚本编写的录制功能，可以用来记录使用者的相关操作，并实时生成对应的代码，降低了自动化测试的代码能力门槛，提高了自动化测试脚本编写的效率。  
 WeAutomator IDE提供了三种录制方式，分别是**智能录制**、**电脑录制**和**控件录制**，其中**控件录制**包含**原生**、**Unity(GA)** 和 **UE(GA)** 三种控件录制方式。  
-![figure](image/record-function.png)
+<img src=image/record-function.png width=40%/>
 - **智能录制**
 **智能录制**功能会根据用户当前操作，智能生成相应代码。例如，用户打开**智能录制**，点击手机上的应用，**智能录制**会自动在主脚本区域生成点击应用的代码。  
 ![figure](image/ai-record.gif)  
@@ -38,6 +40,7 @@ WeAutomator IDE提供了三种录制方式，分别是**智能录制**、**电�
 
     **Unity(GA)** 和 **UE(GA)**控件录制统称为**游戏控件录制**。游戏控件录制基于GAutomator框架，它支持Unity、UE游戏引擎控件的获取，需要游戏接入SDK使用。  
     GAutomator是一个针对手游的UI自动化测试开源框架，支持Unity、UE游戏引擎。设计理念与使用方式类似于Android的Uiautomator。GAutomator以引擎中的元素为操作对象（如Unity中的GameObject），通过操作GameObject实现UI自动化测试。基于GameObject的方式，不存在手机分辨率适配问题，一份脚本可以运行在不同的手机之上。基于GameObject的另外一个优点是鲁棒性较强，游戏的UI界面经常发生变化，GameObject变化频率相对较低。
+    
     ![figure](image/GA-record.png)
     - GA控件是专门针对游戏做的获取控件的功能，根据游戏使用unity和ue引擎来选择
     - 区域1为控件树，根据手机界面元素层级显示此树
@@ -61,7 +64,8 @@ WeAutomator IDE提供了三种录制方式，分别是**智能录制**、**电�
 **图像算法**中集成了**边缘匹配**、**滑动验证**、**点特征匹配**和**黑白屏判断**。API使用方式参见[API文档](../api.md)
 ## 3. 设备交互界面
 设备交互界面为使用者提供了查看和操作所连接设备的交互界面，配合IDE的其他功能，可以让使用者可视化自己的操作（获取控件树、显示点击位置、显示点击图标、显示截图等），方便使用者编写出高质量的测试脚本。  
-![figure](image/device-interface.png)
+<img src=image/device-interface.png width=40%/>
+
 
 - 区域1显示了当前鼠标停放在手机界面的位置
 - 区域2显示了当前手机的屏幕
@@ -74,8 +78,11 @@ WeAutomator IDE提供了三种录制方式，分别是**智能录制**、**电�
 右部功能栏提供了一些快捷生成代码的按钮，可以帮助使用者完成常见的应用操作、点击操作、滑动操作、查找操作、输入文本操作、输入按钮操作、弹窗操作等。
 - 应用操作  
 将鼠标置于**启动APP**上，可以看到其包含以下几个功能。  
-![figure](image/app-operation.png) 
-**启动App**：用户先打开想要测试的App，接着点击**启动App**，IDE会跳出以下界面。  
+
+![figure](image/app-operation.png)
+
+
+ **启动App**：用户先打开想要测试的App，接着点击**启动App**，IDE会跳出以下界面。  
 ![figure](image/start-app.png) 
 点击**从当前屏幕获取**，IDE便可获取当前手机界面打开的App，并自动填入**package**框中，接着点击**确定**，IDE将自动在代码区生成打开指定App的代码。  
 点击**重装App**和**卸载App**，将在代码区生成 `restart_app(pkg)`和`uninstall_app(pkg)`函数，用户需要手动输入目标App名（可以通过**启动App**获取目标App的package name）。   
