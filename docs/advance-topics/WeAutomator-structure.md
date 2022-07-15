@@ -3,6 +3,7 @@ WeAutomator是由腾讯推出的一款基于Python的、跨平台的UI自动化�
 ### 代码目录结构
 WeAutomator的框架核心库是uitrace库，该库通过封装opencv相关公共方法、ocr技术、智能录制截图相关方法和针对unity、ue游戏的GAutomator框架，提供了多种方式的定位技术，
 同时基于框架实现的功能拓展库advanced库，提供了QQ/微信登陆相关操作、基于规则或者强化学习的monkey（需安装uitrace文件夹中requirements列出的torch库）、SIFT等点特征匹配算法、边缘匹配等图像处理相关算法。
+
 #### uitrace 【框架核心库】
 
 ├── api.py 【用户API】    
