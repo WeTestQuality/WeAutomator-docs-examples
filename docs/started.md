@@ -131,8 +131,8 @@ main.py的内容改为：
 from uitrace.api import *
 pytest_main([os.path.join(os.path.dirname(__file__), "test_phoneguard.py")])
 ```
-5. 将调试通过的脚本后导出zip包，提交到udt的用例管理模块/终端云测提测页面
-- 去掉setup_method方法中 app的安装卸载功能：
+5. 将调试通过的脚本后导出zip包，提交到udt的用例管理模块/终端云测提测页面，选择pytest框架；脚本依赖环境，内部镜像选择WeAutomator
+- 去掉setup_method方法中 app的安装卸载功能：（UDT自动化测试自动执行安装和卸载）
 ```python
 #uninstall_app(pkg)
 #安卓app,app_path填写app本地路径
