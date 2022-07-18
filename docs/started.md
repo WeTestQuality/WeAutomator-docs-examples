@@ -33,7 +33,7 @@ class TestPhone(object):
         """
         每个用例开始前初始化
         """
-        #启动app
+        #启动app，用户可修改包名
         pkg = "com.tencent.qqpimsecure"
         uninstall_app(pkg)
         #安卓app,app_path填写app本地路径
