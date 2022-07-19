@@ -86,23 +86,3 @@ IDE 操作入口
 #### venv 【部分python库源码修改】
 
 #### api_doc 【API页面生成】    
-
-### 程序结构
-
-![figure](image/structure.png)
-
-### 模板匹配算法
-
-![figure](image/match.JPG)
-
-### 智能截图算法流程图
-
-![figure](image/roi.JPG)
-
-### 拼图验证算法流程
-
-![figure](image/slide_verify.JPG)
-
-### 后续规划
-
-![figure](image/future.JPG)
