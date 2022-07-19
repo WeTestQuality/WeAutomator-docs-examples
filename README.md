@@ -10,11 +10,17 @@ WeTest WeAutomator Documentation and Test Samples
     - [连接iOS设备](docs/quick-start/ios-connect.md)
     - [编写脚本](docs/quick-start/write-script.md)
     - [提交到云测平台-入手](docs/started.md)
-- 使用说明
-    - [常用API](docs/advance-topics/api.md)
+- WeAutomator底层框架介绍   
+    - [WeAutomator框架介绍](docs/advance-topics/WeAutomator-structure.md)
+    - [API文档](docs/advance-topics/api.md)
+- WeAutomator IDE使用指南
+    - [IDE安装与启动](docs/advance-topics/WeAutomator-IDE/install-and-start.md)
+    - [IDE主交互界面](docs/advance-topics/WeAutomator-IDE/IDE-interface.md)
+    - [IDE中编写脚本](docs/advance-topics/WeAutomator-IDE/IDE-demos/IDE-demos.md)
     - [原生控件录制](docs/advance-topics/record-app.md)
     - [坐标录制](docs/advance-topics/record-aixel.md")
     - [游戏控件录制](docs/advance-topics/record-game.md)
+    - [pytest组织测试用例](docs/advance-topics/WeAutomator-IDE/pytest-in-IDE.md)
     - [执行脚本](docs/advance-topics/run-script.md)
     - [提交到wetest云测](docs/advance-topics/submit-script.md)
 - 常见问题
