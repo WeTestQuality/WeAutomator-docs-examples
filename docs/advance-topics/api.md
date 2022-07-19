@@ -120,26 +120,31 @@ WeAutomator提供多种方式的点击操作，通过设置参数**by**来切换
   ```python
   # 点击图片,loc为图像路径或ndarray形式
   click(loc=img, by=DriverType.CV, offset=None, timeout=30, duration=0.05, times=1)
+  # return->bool: 点击是否成功
   # 示例：点击登陆按钮位置，loc为登陆按钮截图
   click(loc='登陆.jpg', by=DriverType.CV)
 
   # 点击控件，loc为点击的Xpath
   click(loc=Xpath, by=DriverType.UI, offset=None, timeout=30, duration=0.05, times=1)
+  # return->bool: 点击是否成功
   # 示例：通过Xpath的方式点击登陆按钮,Xpath可以使用WeAutomator IDE录制功能获得
   click('//android.widget.LinearLayout[@resource-id="com.tencent.mobileqq:id/ac1"]/android.widget.Button[@text="登录" and @resource-id="com.tencent.mobileqq:id/btn_login"]', by=DriverType.UI, timeout=20)
   
   # 点击文字，loc为待点击的文字信息
   click(loc=text, by=DriverType.OCR, offset=None, timeout=30, duration=0.05, times=1)
+  # return->bool: 点击是否成功
   # 示例：通过OCR技术点击登陆按钮，loc为待点击的文本信息
   click(loc='登陆', by=DriverType.OCR)
 
   # 点击坐标, loc为点击的坐标信息
   click(loc=pos, by=DriverType.POS, offset=None, timeout=30, duration=0.05, times=1)
+  # return->bool: 点击是否成功
   # 示例：点击屏幕上的特定坐标位置,可以通过WeAutomator IDE得出目标位置的坐标
   click(loc=[200, 200], by=DriverType.POS)
 
   #上述4中点击方式，最后都是通过调用 click_pos 实现
   click_pos(pos, duration=0.05, times=1)
+  # return->bool: 点击是否成功
   #pos的计算方式由click()中的参数by决定。
 
   # 长按
@@ -270,7 +275,6 @@ login_by_qq(loc=None, acc="", pwd="", timeout=240, has_verify=False)
 # return->bool: 登陆是否成功
 ```
   
-  [使用qq登陆QQ音乐](../../examples/demos/login_by_qq_or_wechat/README.md)
 ```python
 # 选择使用微信登陆
 from advanced.app.wechat.login import login_by_wechat
@@ -278,10 +282,9 @@ play_with_wechat_friends(locator = None, acc = '', pwd = '', timeout = 240)
 # loc(str): 使用微信登陆的按钮图片，为None时默认当前已进入微信界面
 # acc(str): 登陆的微信账号
 # pwd(str): 微信密码
-# return->: 登陆是否成功
+# return->bool: 登陆是否成功
 ```
   
-  [使用微信登陆QQ音乐](../../examples/demos/login_by_qq_or_wechat/README.md)
 
 
 - 设备相关
