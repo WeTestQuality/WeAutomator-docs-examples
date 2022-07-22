@@ -89,6 +89,8 @@ Fteardown: 测试用例结束执行
 测试用例执行成功和失败引起的。  
 
 更多的详情可参考[pytest测试用例之setup与teardown方法(一)](https://cloud.tencent.com/developer/article/1657959?from=10680)、[pytest测试用例之setup与teardown方法(二)](https://cloud.tencent.com/developer/article/1658959?from=article.detail.1657959)   
+pytest中广泛使用功能更丰富的fixture，代替`setup`和`teardown`方法，详情可见[pytest固件](https://learning-pytest.readthedocs.io/zh/latest/doc/fixture/intro.html) 
+
 
 
 ## 2. IDE中使用pytest组织测试用例  
