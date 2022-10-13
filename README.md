@@ -13,6 +13,7 @@ WeTest WeAutomator Documentation and Test Samples
 - WeAutomator底层框架介绍   
     - [WeAutomator框架介绍](docs/advance-topics/WeAutomator-structure.md)
     - [API文档](docs/advance-topics/api.md)
+    - [uitrace本地化部署](docs/advance-topics/uitrace.md)
 - WeAutomator IDE使用指南
     - [IDE安装与启动](docs/advance-topics/WeAutomator-IDE/install-and-start.md)
     - [IDE主交互界面](docs/advance-topics/WeAutomator-IDE/IDE-interface.md)
