@@ -12,7 +12,7 @@ WeAutomator底层框架uitrace现已开源，使用者可以在本机python环�
 ```
 python3 -m pip install paddleocronnx-2.5.0.3-py3-none-any.whl
 python3 -m pip install uitrace-x.x.x-py3-none-any.whl
-python3 -m pip install advanced-2.0.1-py3-none-any.whl
+python3 -m pip install advanced-x.x.x-py3-none-any.whl
 ```
 
 运行以下命令验证是否安装成功
@@ -48,7 +48,7 @@ if __name__ == '__main__':
 
 ### 本地指定运行设备 
 
-uitrace本地化部署后支持本机连接多台设备，用户可以在python脚本例接收命令行参数，完成对特定设备或多台设备的测试。  
+uitrace本地化部署后支持本机连接多台设备，用户可以在python脚本例接收命令行参数，完成对特定设备或多台设备的测试，同时脚本中也能从当前设备信息中获取设备的信息。
 
 用户可以指定单台或者多台设备，运行同一脚本。
 
@@ -98,8 +98,21 @@ python3 main.py --udid=3debcc18
 
 # 指定多台设备
 python3 main.py --udid=3debcc18 & python3 main.py --udid=cea0a3ff
+
 ```
 
+### 脚本中获取设备id等信息
+
+用户可参考`uitrace/utils/toolkit.py`中的`parse_args()`函数，里面列举了可以获取到的信息，如想在脚本中获取设备id，可按以下方式：
+
+```python
+from uitrace.utils.toolkit import parse_args() as args
+
+udid = args.udid
+
+```
+
+用户可以根据不同的设备id，在脚本里指定不同的测试场景
 
 安装使用过程中遇到问题可联系相关人员或者在Github [issues](https://github.com/WeTestQuality/WeAutomator-docs-examples/issues)区提问。
 
