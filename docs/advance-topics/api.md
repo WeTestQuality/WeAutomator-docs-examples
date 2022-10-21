@@ -1,14 +1,17 @@
 # 常用API
 
-WeAutomator 提供了约 50 个 API，如常用的点击、滑动、查找、等待、登录等，全部 API 文档详见 **工具**-**帮助**-**API**，有详细介绍。
+WeAutomator 底层测试框架uitrace提供了约 50 个 API，如常用的点击、滑动、查找、等待、登录等。
 
 ## 连接设备
 **先将手机和电脑相连，连接方式如下**
 - [连接Android设备](../quick-start/android-connect.md)
+
 - [连接iOS设备](../quick-start/ios-connect.md)
 
 ## API介绍
+
 - 连接设备
+
 ```python
 from uitrace.api import *
 # 连接设备
@@ -24,17 +27,22 @@ init_driver(os_type=None, udid=None, max_size=800, bundle_id="com.watest.WebDriv
 # adb_path(str): adb路径，用户可进行配置以避免adb冲突；为None时则使用工具中自带的adb文件
 # **kwargs：脚本执行产出路径的修改等
 
-```    
+```
+
 - 断开连接
+
 ```python
 # 结束驱动
 stop_driver()
 # 脚本运行结束后调用，会释放相关驱动，生成报告等
 ```
+
 - 设备功能键操作
+
 ```python
 press(name)
-# name(DeviceButton):   
+# name(DeviceButton):  详见DeviceButton
+
 class DeviceButton{
   HOME = 3
   VOLUME_UP = 24
@@ -54,11 +62,12 @@ class DeviceButton{
   UNLOCK = 1001
 }
 ```
+
 - 应用操作
 
 `可以通过WeAutomator IDE获取手机应用的package name(pkg)`
 
-WeAutomator提供了针对应用的多种操作，包括：
+Uitrace提供了针对应用的多种操作，包括：
 
 ```python
 #安装应用
@@ -68,14 +77,16 @@ install_app(app_path)
 # 示例： 安装指定包
 install_app('com.sohu.inputmethod.sogou.apk')
 ```
+
 ```python
 #卸载应用
 uninstall_app(pkg)
 # pkg(str):IOS系统为卸载应用的bundle id
 # return->bool: 卸载是否成功
 # 示例: 卸载指定应用
-uninstall_app('com.sohu.inputmethod.sogou')
+uninstall_app('com.sohu.inputmethod.sogou')
 ```
+
 ```python
 #启动应用
 start_app(pkg, clear_data=False)
@@ -85,6 +96,7 @@ start_app(pkg, clear_data=False)
 # 示例：启动手机设置（不同手机的同一应用的package name(pkg)可能不同
 start_app('com.android.settings')
 ```
+
 ```python
 #重启应用
 restart_app(pkg, **kwargs)
@@ -93,6 +105,7 @@ restart_app(pkg, **kwargs)
 # 示例: 重启手机qq
 restart_app('com.tencent.mobileqq')
 ```
+
 ```python
 # 结束应用
 stop_app(pkg)
@@ -101,23 +114,34 @@ stop_app(pkg)
 # 示例：关闭手机qq
 stop_app('com.tencent.mobileqq')
 ```
+
 ```python
 #获取当前应用
 current_app():
 # return->str: 应用的bundle id
 ```
+
 ```python
 # 获取设备中安装的app
 app_list()
 # return->list: app名字
 ```
 
-
 - 点击
 
 WeAutomator提供多种方式的点击操作，通过设置参数**by**来切换不同的点击方式。
 
   ```python
+  # 点击
+  click(loc=None, by=DriverType.POS, offset=None, timeout=30, duration=0.05, times=1, **kwargs)
+  # loc：待点击的目标，具体形式需要符合点击的类型
+  # by(DriverType)：查找类型
+  # offset(list or tuple)：偏移，元素定位位置加上偏移为实际操作位置
+  # timeout(int)：定位元素的超时时间
+  # duration(float)：点击的按压时长，以实现长按
+  # times(int)：点击次数，以实现双击等效果
+  # **kwargs：基于不同的查找类型，需要其他的参数，具体参见各find函数
+
   # 点击图片,loc为图像路径或ndarray形式
   click(loc=img, by=DriverType.CV, offset=None, timeout=30, duration=0.05, times=1)
   # return->bool: 点击是否成功
@@ -144,8 +168,9 @@ WeAutomator提供多种方式的点击操作，通过设置参数**by**来切换
 
   #上述4中点击方式，最后都是通过调用 click_pos 实现
   click_pos(pos, duration=0.05, times=1)
+  # pos(tuple or list): 点击的目标坐标
+  # times(int): 点击次数，以实现双击等效果
   # return->bool: 点击是否成功
-  #pos的计算方式由click()中的参数by决定。
 
   # 长按
   long_click(loc=None, by=DriverType.POS, offset=None, timeout=30, duration=1, **kwargs)
@@ -169,6 +194,7 @@ WeAutomator提供多种方式的点击操作，通过设置参数**by**来切换
 - 滑动
 
 WeAutomator提供了多种方式的滑动操作，通过设置参数**by**来切换不同的滑动方式
+
 ```python
 # 滑动操作
 slide(loc_from=None, loc_to=None, loc_shift=None, by=DriverType.CV, timeout=30, duration=None)
@@ -181,23 +207,31 @@ slide(loc_from=None, loc_to=None, loc_shift=None, by=DriverType.CV, timeout=30, 
 # slide()方法根据不同的by，采用不同的方式计算出滑动起点和终点的坐标，并调用slide_pos方法进行滑动
 
 # 根据坐标滑动
-slide_pos(pos_from, pos_to=None, pos_shift=None, duration=0)
+slide_pos(pos_from, pos_to=None, pos_shift=None, down_duration=0, up_duration=0, velocity=0.01, **kwargs)
+# pos_from(tuple or list): 滑动起始坐标
+# pos_to(tuple or list)：滑动结束坐标，为None时则根据pos_shift滑动
+# pos_shift(tuple or list)：滑动偏移距离
+# down_duration(int or float)：起始位置按下时长(单位：s)，以实现拖拽功能
+# up_duration(int or float)：移动后等待时长(单位：s)，以实现摇杆移动功能
+# **kwargs(dict)：key值为duration，是用来兼容老API，会将dowan_duration设置为duration值
 # 以上滑动操作最后都是调用slide_pos方法，从起始位置滑到目标位置
 ```
 
 - 查找
 
 WeAutomator提供了多种方式的查找操作，通过设置参数**by**来切换不同的查找方式
+
 ```python
 # 查找
 find(loc, by=DriverType.CV, timeout=30)
-# by(DriverType),为查找方式设定。根据不同的by，loc参数设定也不一样
+# loc: 待查找的元素，具体形式需要符合查找类型
+# by(DriverType)：查找方式，根据不同的by，loc参数设定也不一样
 # by=DriverType.UI, loc: 目标控件的Xpath， 调用find_ui方法
 # by=DriverType.CV, loc: 图片路径名，调用find_cv方法
 # by=DriverType.OCR, loc：目标位置的文本信息，调用find_ocr方法
 # by=DriverType.POS, loc: 坐标
 # by=DriverType.GA_UNITY or by=DriverType.GA_UE, loc: 目标控件的Xpath，调用find_ga方法
-# return: 查找到返回坐标，否则返回None
+# return->list: 查找到返回坐标，否则返回None
 # 说明：find方法会根据不同的by参数，调用不同的查找方法，查找方法包括：find_cv, find_ocr, find_ui, find_ga
 
 # 基于多尺寸模版匹配的图像查找
@@ -245,6 +279,7 @@ multi_find(ctrl="", img=None, pos=None, by=DriverType.UI, ctrl_timeout=30, img_t
 # ctrl_timeout(int): 基于控件查找的超时时间
 # img_timeout(int): 基于图像匹配查找的超时时间
 # **kwargs: 不同查找类型需要设置参数，具体见各find函数
+# return->list, DriverType: 查找到的中心坐标及查找方式
 ```
 
 - 账号相关
@@ -265,6 +300,7 @@ wechat_login(acc = '', pwd = '')
 # pwd(str): 密码
 # return->bool: 登陆是否成功
 ```
+
 ```python
 # 选择使用QQ登陆
 from advanced.app.qq.login import login_by_qq
@@ -278,14 +314,12 @@ login_by_qq(loc=None, acc="", pwd="", timeout=240, has_verify=False)
 ```python
 # 选择使用微信登陆
 from advanced.app.wechat.login import login_by_wechat
-play_with_wechat_friends(locator = None, acc = '', pwd = '', timeout = 240)
+login_by_wechat(locator = None, acc = '', pwd = '', timeout = 240)
 # loc(str): 使用微信登陆的按钮图片，为None时默认当前已进入微信界面
 # acc(str): 登陆的微信账号
 # pwd(str): 微信密码
 # return->bool: 登陆是否成功
 ```
-  
-
 
 - 设备相关
 
@@ -296,7 +330,7 @@ get_driver(by=DriverLib.WDA)
 # return->DeviceEnv: 具体驱动类型
 
 # 根据xpath获取元素列表
-get_elements(xpath, by=DriverType.UI)
+get_elements(xpath, by=DriverType.UI, win_id=None)
 # xpath(str): 获取元素的xpath
 # by(DriverType): 获取元素的类型，系统原生DriverType.UI, GA Unity为DriverTpe.GA_UNITY, GA UE为DriverType.GA_UE
 # win_id(int): 窗口id，对于控件有多窗口的情况，可以指定具体窗口(Android)
@@ -314,7 +348,7 @@ get_text(img, text_type="ch")
 # [[[127.0, 242.0], [201.0, 242.0], [201.0, 261.0], [127.0, 261.0]], ['注册/登录', 0.96725357]]，分别为左上、右上、右下、左下点坐标及识别结果与匹配度
 
 # 获取控件树
-get_uitree(by=DriverType.UI)
+get_uitree(by=DriverType.UI, all_wins=False)
 # by(DriverType): 获取控件树的类型，系统原生DriverType.UI, GA Unity为DriverType.GA_UNITY, GA UE为DriverType.GA_UE
 # all_wins(bool): 为True时获取所有窗口控件，为False时则自动判断当前窗口获取其控件
 # return->dict: 控件树
@@ -327,7 +361,9 @@ screenshot(label='screenshot', img_path=None, pos=None, pos_list=None)
 # pos_list(list): 将一组坐标绘制在图像上
 # return->(str): 图像存储路径
 ```
+
 - 文本输入
+
 ```python
 # 文本输入
 input_text(text, xpath=None, timeout=30, depth=10, ime=IMEType.ADBKEYBOARD)
@@ -337,7 +373,9 @@ input_text(text, xpath=None, timeout=30, depth=10, ime=IMEType.ADBKEYBOARD)
 # depth(int): source tree的最大深度值，部分应用深度值设置过大会导致操作不稳定，过小可能导致输入失败
 # ime(IMEType): Android文本输入采用的方式
 ```
+
 - 坐标转换
+
 ```python
 # 将绝对坐标转换成相对坐标
 abs2rel(pt)
@@ -353,7 +391,9 @@ rel2abs(pt)
 # 示例：
 rel_pos = rel2abs((100, 200))
 ```
+
 - 功能模块初始化
+
 ```python
 # 初始化OCR框架， 为初始化则将在第一次调用相关功能时自动初始化
 init_ocr(text_type='ch')
@@ -379,6 +419,7 @@ init_env(ocr=True, input=True, ui=True, **kwargs)
 ```
 
 - IOS special API
+
 ```python
 # 执行操作
 perform(actions)
@@ -405,7 +446,9 @@ pf_moveto(pos)
 pf_up()
 # return->dict: 抬起操作的协议
 ```
+
 - Android special API  
+
 **slide_track(track)需要补充示例**
 ```python
 # 初始化Android_UiAutomator框架，未初始化则将在第一次调用相关功能时自动初始化
@@ -444,9 +487,16 @@ current_activity()
 # 获取屏幕分辨率
 screen_size()
 # return->list: 屏幕分辨率
+
+# 执行adb命令
+cmd_adb(cmd, id_mark, timeout)
+# cmd(str or list):  需要执行的adb命令或一系列命令, 指令不需要加"adb"
+# id_mark(bool): 默认为True，允许指定具体设备id
+# timeout(int): 指令执行完的等待时间，大于0等待，否则不等待
 ```
 
 - 其他
+
 ```python
 # 记录报告
 record_report(func, args=None, kwargs=None)
@@ -532,6 +582,7 @@ clear_event_handler()
 ```
 
 - 图像算法  
+
 ```python
 # 边缘匹配
 edge_match(tpl, scene)
@@ -563,14 +614,4 @@ screen_check(img, pct_thresh=0.95, is_black=True, gray_thresh=30)
 # is_black (bool): True则判断是否为黑屏，False则判断是否为白屏
 # gray_thresh (int): 灰度阈值，判断该像素点是否为黑屏区域或白屏区域
 # return->bool: 检测结果
-```
-- 智能 monkey
-
-```python
-# 进行智能探索（Android）
-ai_monkey(pkg=None, explore_type=ExploreType.CTRL, timeout=-1, pre_exec=None, web_check=True, keyboard_check=True, restart_interval = 900, other_data=[], qq_data=[], wechat_data=[])
-# 进行智能探索（iOS）
-ai_monkey(pkg=None, explore_type=ExploreType.UI, timeout=3600, pre_exec=None)
-# 停止智能探索（Android）
-stop_monkey(ai_key)
 ```
