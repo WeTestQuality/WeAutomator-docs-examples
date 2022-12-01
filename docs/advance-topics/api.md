@@ -285,7 +285,7 @@ multi_find(ctrl="", img=None, pos=None, by=DriverType.UI, ctrl_timeout=30, img_t
 - 账号相关
 
 ```python
-# QQ登录
+# 被测应用为QQ，进行登录
 from advanced.app.qq.login import login_qq
 login_qq(acc='', pwd='', has_verify=False)
 # acc(str): QQ账号
@@ -293,16 +293,16 @@ login_qq(acc='', pwd='', has_verify=False)
 # has_verify(bool): 是否存在滑动验证过程
 # return(bool): 是否登陆成功
 
-# 微信登录
+# 被测应用为微信，进行登录
 from advanced.app.wechat.login import login_wechat
-wechat_login(acc = '', pwd = '')
+login_wechat(acc = '', pwd = '')
 # acc(str): 微信账号
 # pwd(str): 密码
 # return->bool: 登陆是否成功
 ```
 
 ```python
-# 选择使用QQ登陆
+# 第三方应用通过QQ渠道登录
 from advanced.app.qq.login import login_by_qq
 login_by_qq(loc=None, acc="", pwd="", timeout=240, has_verify=False)
 # loc(str): 使用QQ登陆的按钮图片，为None时默认当前已进入QQ界面
@@ -312,7 +312,7 @@ login_by_qq(loc=None, acc="", pwd="", timeout=240, has_verify=False)
 ```
   
 ```python
-# 选择使用微信登陆
+# 第三方应用通过微信渠道登录
 from advanced.app.wechat.login import login_by_wechat
 login_by_wechat(locator = None, acc = '', pwd = '', timeout = 240)
 # loc(str): 使用微信登陆的按钮图片，为None时默认当前已进入微信界面
