@@ -48,7 +48,45 @@ if __name__ == '__main__':
 
 ### 本地指定运行设备 
 
-uitrace本地化部署后支持本机连接多台设备，用户可以在python脚本例接收命令行参数，完成对特定设备或多台设备的测试，同时脚本中也能从当前设备信息中获取设备的信息。
+uitrace本地化部署后支持本机连接多台设备，用户可以在执行python脚本时指定设备运行，完成对特定设备或多台设备的测试，同时脚本中也能从当前设备信息中获取设备的信息。
+
+#### init_driver()时指定设备
+
+```
+def init_driver(
+        os_type: OSType = None,
+        udid: str = None,
+        max_size: int = 800,
+        bundle_id: str = "com.facebook.WebDriverAgentRunner.xctrunner",
+        screen_port: int = None,
+        ctrl_port: int = None,
+        mode: RunMode = RunMode.SINGLE,
+        driver_lib: DriverLib = None,
+        adb_path: str = "", **kwargs):
+    """初始化设备驱动及环境.
+
+    Args:
+        os_type (OSType): 设备系统，安卓为OSType.ANDROID，iOS为OSType.IOS
+        udid (str): 设备ID
+        max_size (int): 传输画面的最大边长
+        bundle_id (str): 设备为iOS时，WDA的bundle id
+        screen_port (int): 获取画面服务的端口，不指定则使用闲置端口
+        ctrl_port (int): 操作服务的端口，不指定则使用闲置端口
+        mode (RunMode): 运行模式，一般使用默认即可
+        driver_lib (DriverLib): 底层驱动使用的框架
+        adb_path (str): adb路径，用户可进行配置以避免adb冲突；为None时则使用工具中自带的adb文件
+        **kwargs: 脚本执行产出路径的修改等
+
+    """
+```
+通过设置`udid`参数来指定设备，如：
+
+```
+# 指定设备cef0a3
+init_driver(udid='cef0a3')
+```
+
+#### 命令行传入设备id
 
 用户可以指定单台或者多台设备，运行同一脚本。
 
