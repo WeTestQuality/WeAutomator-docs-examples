@@ -163,8 +163,11 @@ WeAutomator提供多种方式的点击操作，通过设置参数**by**来切换
   # 点击坐标, loc为点击的坐标信息
   click(loc=pos, by=DriverType.POS, offset=None, timeout=30, duration=0.05, times=1)
   # return->bool: 点击是否成功
-  # 示例：点击屏幕上的特定坐标位置,可以通过WeAutomator IDE得出目标位置的坐标
+  # 示例：点击屏幕上的特定坐标位置, 坐标[200, 200]是scrcpy传输画面（如：360x800）的相对坐标，不是相对真实屏幕分辨率(如：1080x2400)的坐标
   click(loc=[200, 200], by=DriverType.POS)
+  # 如果想点击相对真实分辨率的坐标，可以转化为绝对坐标传入
+  w, h = screen_size()
+  click(loc=[200 / w, 200 / h], by=DriverType.POS)
 
   #上述4中点击方式，最后都是通过调用 click_pos 实现
   click_pos(pos, duration=0.05, times=1)
@@ -379,17 +382,20 @@ input_text(text, xpath=None, timeout=30, depth=10, ime=IMEType.ADBKEYBOARD)
 ```python
 # 将绝对坐标转换成相对坐标
 abs2rel(pt)
-# pos(tuple or list): 绝对坐标，如(0.2, 0.3)
-# return->tuple: 相对坐标, 即(int(0.2*w), int(0.3*h)), (w, h)为当前手机屏幕尺寸
+# pos(tuple or list): 绝对坐标，如(200, 200)
+# return->tuple: 相对坐标, 即(int(0.2/w), int(0.3/h)), (w, h)为当前scrcpy画面尺寸
 # 示例：
-abs_pos = abs2rel(pos=(0.23, 0.6))
+rel_pos = abs2rel(pos=(200， 200))
+# 该api不支持将坐标转化为相对于真实手机屏幕分辨率的坐标，不过可以通过以下方式实现
+w, h = screen_size()
+rel_pos = (200 / w, 200 / h)
 
 # 将相对坐标转换成绝对坐标
 rel2abs(pt)
 # pos(tuple or list): 相对坐标
-# return->tuple: 绝对坐标
+# return->tuple: 绝对坐标, 返回的是scrcpy传输画面上的绝对坐标，不是真实手机分辨率的绝对坐标
 # 示例：
-rel_pos = rel2abs((100, 200))
+abs_pos = rel2abs((0.2, 0.1))
 ```
 
 - 功能模块初始化
